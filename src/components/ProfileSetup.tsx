@@ -15,12 +15,12 @@ interface ProfileSetupProps {
 export default function ProfileSetup({ user, onComplete }: ProfileSetupProps) {
   const [name, setName] = useState('');
   const [bio, setBio] = useState('');
-  const [phoneContact, setPhoneContact] = useState('');
+  const [phoneContact, setPhoneContact] = useState(user.phone);
   const [avatar, setAvatar] = useState('');
   const [loading, setLoading] = useState(false);
 
   const handleComplete = async () => {
-    if (!name || !phoneContact) return;
+    if (!name) return;
 
     setLoading(true);
     try {
@@ -84,12 +84,12 @@ export default function ProfileSetup({ user, onComplete }: ProfileSetupProps) {
           </div>
 
           <div className="space-y-2">
-            <label className="text-sm font-medium">Номер телефона для поиска *</label>
+            <label className="text-sm font-medium">Номер телефона для поиска</label>
             <Input
               type="tel"
-              placeholder="+7..."
               value={phoneContact}
-              onChange={(e) => setPhoneContact(e.target.value)}
+              disabled
+              className="bg-muted"
             />
           </div>
 
@@ -105,7 +105,7 @@ export default function ProfileSetup({ user, onComplete }: ProfileSetupProps) {
 
           <Button
             onClick={handleComplete}
-            disabled={loading || !name || !phoneContact}
+            disabled={loading || !name}
             className="w-full"
           >
             {loading ? 'Сохранение...' : 'Продолжить'}
