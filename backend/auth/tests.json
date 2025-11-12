@@ -1,0 +1,34 @@
+{
+  "tests": [
+    {
+      "name": "Login admin user",
+      "method": "POST",
+      "path": "/",
+      "body": {
+        "action": "login",
+        "phone": "+79022428092",
+        "password": "roma"
+      },
+      "expectedStatus": 200,
+      "expectedBody": {
+        "id": 1
+      },
+      "bodyMatcher": "partial"
+    },
+    {
+      "name": "Login with wrong password",
+      "method": "POST",
+      "path": "/",
+      "body": {
+        "action": "login",
+        "phone": "+79022428092",
+        "password": "wrong"
+      },
+      "expectedStatus": 401,
+      "expectedBody": {
+        "error": "string"
+      },
+      "bodyMatcher": "partial"
+    }
+  ]
+}
