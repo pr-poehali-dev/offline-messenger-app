@@ -23,16 +23,20 @@ export default function AddContact({ userId, onBack }: AddContactProps) {
 
     try {
       const response = await fetch(
-        `https://functions.poehali.dev/410cf00d-ff37-4c5b-ac2d-2bd427dbd6c9?action=search&phone=${phone}`
+        `https://functions.poehali.dev/410cf00d-ff37-4c5b-ac2d-2bd427dbd6c9?action=search&phone=${encodeURIComponent(phone)}`
       );
 
+      console.log('Search response status:', response.status);
+      const data = await response.json();
+      console.log('Search response data:', data);
+
       if (response.ok) {
-        const data = await response.json();
         setFoundUser(data);
       } else {
-        setError('Пользователь не найден');
+        setError(data.error || 'Пользователь не найден');
       }
     } catch (err) {
+      console.error('Search error:', err);
       setError('Ошибка поиска');
     } finally {
       setLoading(false);
